@@ -1,3 +1,7 @@
+
+
+
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +12,9 @@ import LoginPage from "./pages/LoginPage"
 import ResetPasswordPage from "./pages/ResetPasswordPage"
 import ResetPasswordPageConfirm from "./pages/ResetPasswordPageConfirm";
 import ActivatePage from "./pages/ActivatePage";
+import ProfileEditPage from "./pages/ProfileEditPage";
+import Button from 'react-bootstrap/Button';
+
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -23,6 +30,10 @@ function App() {
           <Route path="/password/reset/confirm/:uid/:token" element={<ResetPasswordPageConfirm />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFoundPage />} />
+
+
+          <Route path="/profile" element={<ProfileEditPage />} />  {/* Add profile edit route */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
       <ToastContainer />
@@ -31,3 +42,8 @@ function App() {
 }
 
 export default App
+
+
+
+// ... other imports
+

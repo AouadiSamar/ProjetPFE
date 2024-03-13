@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
 
@@ -13,20 +19,19 @@ const initialState = {
     message: "",
 }
 
-export const register = createAsyncThunk(
-    "auth/register",
-    async (userData, thunkAPI) => {
-        try {
-            return await authService.register(userData)
-        } catch (error) {
-            const message = (error.response && error.response.data
-                && error.response.data.message) ||
-                error.message || error.toString()
 
-            return thunkAPI.rejectWithValue(message)
-        }
+
+export const updateProfile = createAsyncThunk("auth/updateProfile", async (updatedData, thunkAPI) => {
+    try {
+      const accessToken = thunkAPI.getState().auth.user.access;
+      return await authService.updateProfile(updatedData, accessToken);
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
-)
+  });
+  
+  
 
 export const login = createAsyncThunk(
     "auth/login",
@@ -125,21 +130,7 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(register.pending, (state) => {
-                state.isLoading = true
-            })
-            .addCase(register.fulfilled, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = true
-                state.user = action.payload
-            })
-            .addCase(register.rejected, (state, action) => {
-                state.isLoading = false
-                state.isSuccess = false
-                state.isError = true
-                state.message = action.payload
-                state.user = null
-            })
+            
             .addCase(login.pending, (state) => {
                 state.isLoading = true
             })
@@ -203,7 +194,21 @@ export const authSlice = createSlice({
             })
             .addCase(getUserInfo.fulfilled, (state, action) => {
                 state.userInfo = action.payload
+            
             })
+            .addCase(updateProfile.pending, (state) => {
+                state.isLoading = true;
+              })
+              .addCase(updateProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.userInfo = action.payload; // Mise à jour des informations de l'utilisateur
+              })
+              .addCase(updateProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+              })
     }
 })
 
@@ -213,3 +218,5 @@ export const authSlice = createSlice({
 export const { reset } = authSlice.actions
 
 export default authSlice.reducer
+     
+     

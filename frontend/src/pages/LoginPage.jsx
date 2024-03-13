@@ -51,7 +51,7 @@ const LoginPage = () => {
         dispatch(reset())
         dispatch(getUserInfo())
 
-    }, [isError, isSuccess, user, navigate, dispatch])
+    }, [isError, isSuccess, user, navigate, dispatch, message])
 
 
 
