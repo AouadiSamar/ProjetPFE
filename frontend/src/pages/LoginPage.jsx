@@ -80,10 +80,12 @@ const LoginPage = () => {
                     <Link to="/reset-password">Forget Password ?</Link>
 
                     <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Login</button>
+                    
                 </form>
             </div>
         </>
     )
 }
 
-export default LoginPage
+export default LoginPage// Dans votre authSlice.js
+
